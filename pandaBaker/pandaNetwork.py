@@ -4,13 +4,15 @@ from htm.bindings.engine_internal import Network as BaseNetwork
 from pandaBaker.pandaBaker import PandaBaker
 from pandaBaker.dataStructs import cDataStream
 
-BAKE_DATABASE_FILE_PATH = os.path.join(os.getcwd(), 'bakedDatabase', 'pandaVis.db')
-
 class Network(BaseNetwork):
-    def __init__(self):
+    def __init__(self,databaseFolderPath=None):
         self.firstRun = True
         self.bakePandaData = True
-        self.pandaBaker = PandaBaker(BAKE_DATABASE_FILE_PATH)
+        if(databaseFolderPath==None):
+            self.pandaBaker = PandaBaker(os.path.join(os.getcwd(), 'bakedDatabase', 'pandaVis.db'))
+        else:
+            self.pandaBaker = PandaBaker(os.path.join(os.getcwd(), databaseFolderPath, 'bakedDatabase', 'pandaVis.db'))
+
         self.iteration = 0
 
         self.updateDataStreams = None # callback for user method
